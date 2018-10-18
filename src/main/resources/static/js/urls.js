@@ -14,9 +14,9 @@ function getShortUrl() {
             alert("系统异常");
         },
         success : function(data) {
-            $('#sUrlDiv').removeClass("hidden")
+            $('#sUrlDiv').removeClass("hidden");
             if (data.code == 0) {
-                $('#sUrl').html(getHost()+data.data);
+                $('#sUrl').html(getHost() + data.data);
             }
         }
     });
@@ -36,7 +36,7 @@ function getSinaShortUrl() {
             alert("系统异常");
         },
         success : function(data) {
-            $('#sUrlDiv').removeClass("hidden")
+            $('#sUrlDiv').removeClass("hidden");
             if (data.code == 0) {
                 $('#sUrl').html(data.data);
             }
@@ -44,6 +44,7 @@ function getSinaShortUrl() {
     });
 
 }
+
 
 function getHost() {
     var protocol = window.location.protocol;

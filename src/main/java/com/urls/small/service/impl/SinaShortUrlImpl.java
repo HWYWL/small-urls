@@ -1,5 +1,6 @@
 package com.urls.small.service.impl;
 
+import cn.hutool.core.util.URLUtil;
 import com.urls.small.modle.SinaShortUrl;
 import com.urls.small.service.SinaShortUrlService;
 import com.urls.small.url.UrlDao;
@@ -18,8 +19,8 @@ public class SinaShortUrlImpl implements SinaShortUrlService {
 
     @Override
     public SinaShortUrl getShortUrl(String longUrl) {
-        if(!longUrl.startsWith("http://")&&!longUrl.startsWith("https://")){
-            longUrl = new StringBuffer().append("http://"+longUrl).toString();
+        if(!longUrl.startsWith("http://") && !longUrl.startsWith("https://")){
+            longUrl = URLUtil.normalize(longUrl);
         }
 
         return urlDao.getSinaShortUrl(longUrl);

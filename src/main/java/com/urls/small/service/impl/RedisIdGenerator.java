@@ -21,9 +21,9 @@ import org.springframework.stereotype.Service;
 public class RedisIdGenerator implements IdGenerator {
 
 
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisTemplate redisTemplate;
 
-    private BoundHashOperations<String,String,Long> hashOperations;
+    private BoundHashOperations hashOperations;
     /**
      * 默认步长，为100
      */
@@ -63,7 +63,6 @@ public class RedisIdGenerator implements IdGenerator {
         }
 
         redisTemplate.setHashKeySerializer(stringSerializer);
-        System.out.println(hashOperations.get(idKey));
     }
 
 

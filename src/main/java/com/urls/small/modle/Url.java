@@ -1,5 +1,10 @@
 package com.urls.small.modle;
 
+/**
+ * 本地短链接
+ * @author YI
+ * @date 2018-10-18 22:09:54
+ */
 public class Url {
     private String id;
 
