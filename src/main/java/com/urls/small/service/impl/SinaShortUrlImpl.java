@@ -1,11 +1,17 @@
 package com.urls.small.service.impl;
 
 import cn.hutool.core.util.URLUtil;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONUtil;
+import com.urls.small.config.Config;
 import com.urls.small.modle.SinaShortUrl;
 import com.urls.small.service.SinaShortUrlService;
 import com.urls.small.url.UrlDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * 新浪短链接生成
@@ -23,6 +29,16 @@ public class SinaShortUrlImpl implements SinaShortUrlService {
             longUrl = URLUtil.normalize(longUrl);
         }
 
-        return urlDao.getSinaShortUrl(longUrl);
+        String url;
+        SinaShortUrl shortUrl = null;
+        try {
+            url = Config.api + "source=" + Config.source + "&url_long=" + URLEncoder.encode(longUrl, "utf-8");
+            String result = HttpUtil.get(url);
+            shortUrl = JSONUtil.toBean(JSONUtil.parseObj(result), SinaShortUrl.class);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        return urlDao.getSinaShortUrl(shortUrl);
     }
 }

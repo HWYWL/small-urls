@@ -11,6 +11,7 @@ public class Urls {
     private String object_type;
     private int type;
     private String object_id;
+    private String qrCode;
 
     public void setUrl_short(String url_short){
         this.url_short = url_short;
@@ -52,6 +53,14 @@ public class Urls {
         return this.object_id;
     }
 
+    public String getQrCode() {
+        return qrCode;
+    }
+
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
+    }
+
     @Override
     public String toString() {
         return "Urls{" +
@@ -60,6 +69,7 @@ public class Urls {
                 ", object_type='" + object_type + '\'' +
                 ", type=" + type +
                 ", object_id='" + object_id + '\'' +
+                ", qrCode='" + qrCode + '\'' +
                 '}';
     }
 }

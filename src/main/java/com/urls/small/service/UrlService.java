@@ -2,6 +2,11 @@ package com.urls.small.service;
 
 import com.urls.small.modle.Url;
 
+/**
+ * 本地短链接服务
+ * @author YI
+ * @date 2018-10-18 22:25:31
+ */
 public interface UrlService {
 
     /**

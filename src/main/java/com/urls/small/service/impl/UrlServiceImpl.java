@@ -1,5 +1,6 @@
 package com.urls.small.service.impl;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.urls.small.modle.Url;
@@ -40,7 +41,7 @@ public class UrlServiceImpl implements UrlService {
 
         if(sUrl!=null){
             Url lurl = urlDao.getUrl(sUrl);
-            if(lurl!=null&&lurl.getUrl().equals(url.getUrl())){
+            if(lurl != null && lurl.getUrl().equals(url.getUrl())){
                 return sUrl;
             }
         }
@@ -49,6 +50,7 @@ public class UrlServiceImpl implements UrlService {
         String id = Long.toString(l, 36);
 
         url.setId(id);
+
         urlDao.saveUrl(url);
         urlDao.saveSurl(md5,id);
 

@@ -10,6 +10,8 @@ public class Url {
 
     private String url;
 
+    private String qrCode;
+
     public String getId() {
         return id;
     }
@@ -26,14 +28,20 @@ public class Url {
         this.url = url;
     }
 
+    public String getQrCode() {
+        return qrCode;
+    }
 
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
+    }
 
     @Override
     public String toString() {
-        return new StringBuilder()
-                .append("id:"+ id)
-                .append("url:"+ url)
-                .toString();
+        return "Url{" +
+                "id='" + id + '\'' +
+                ", url='" + url + '\'' +
+                ", qrCode='" + qrCode + '\'' +
+                '}';
     }
-
 }
