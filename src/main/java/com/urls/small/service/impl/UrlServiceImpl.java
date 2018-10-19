@@ -28,7 +28,7 @@ public class UrlServiceImpl implements UrlService {
     }
 
     @Override
-    public String saveUrl(Url url) {
+    public Url saveUrl(Url url) {
         String lUrl = url.getUrl();
         if(!lUrl.startsWith("http://") &&! lUrl.startsWith("https://")){
             url.setUrl(URLUtil.normalize(lUrl));
@@ -39,10 +39,10 @@ public class UrlServiceImpl implements UrlService {
         // 判断该md5是否已经存在
         String sUrl = urlDao.getSurl(md5);
 
-        if(sUrl!=null){
+        if(sUrl != null){
             Url lurl = urlDao.getUrl(sUrl);
             if(lurl != null && lurl.getUrl().equals(url.getUrl())){
-                return sUrl;
+                return lurl;
             }
         }
 
@@ -54,6 +54,6 @@ public class UrlServiceImpl implements UrlService {
         urlDao.saveUrl(url);
         urlDao.saveSurl(md5,id);
 
-        return id;
+        return url;
     }
 }

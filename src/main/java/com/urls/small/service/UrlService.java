@@ -21,6 +21,6 @@ public interface UrlService {
      * @param url 本地连接
      * @return
      */
-    String saveUrl(Url url);
+    Url saveUrl(Url url);
 
 }

@@ -16,7 +16,8 @@ function getShortUrl() {
         success : function(data) {
             $('#sUrlDiv').removeClass("hidden");
             if (data.code == 0) {
-                $('#sUrl').html(getHost() + data.data);
+                $('#sUrl').html(getHost() + data.data.id);
+                $("#sImg").attr("src", data.data.qrCode);
             }
         }
     });
@@ -38,7 +39,8 @@ function getSinaShortUrl() {
         success : function(data) {
             $('#sUrlDiv').removeClass("hidden");
             if (data.code == 0) {
-                $('#sUrl').html(data.data);
+                $('#sUrl').html(data.data.url_short);
+                $("#sImg").attr("src", data.data.qrCode);
             }
         }
     });

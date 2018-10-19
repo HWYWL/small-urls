@@ -28,7 +28,7 @@ public class UrlController {
      */
     @GetMapping("/")
     public String index() {
-        return "/index";
+        return "index";
     }
 
     /**
@@ -41,7 +41,7 @@ public class UrlController {
         Url u = urlService.getUrl(id);
 
         if(u == null){
-            return "/404";
+            return "404";
         }
 
         return "redirect:" + u.getUrl();
@@ -56,7 +56,7 @@ public class UrlController {
     @ResponseBody
     public MessageResult getShortUrl(Url url){
 
-        String urls = urlService.saveUrl(url);
+        Url urls = urlService.saveUrl(url);
         
         return MessageResult.ok(urls);
     }
@@ -72,7 +72,7 @@ public class UrlController {
 
         SinaShortUrl shortUrl = sinaShortUrlService.getShortUrl(url);
 
-        return MessageResult.ok(shortUrl.getUrls().get(0).getUrl_short());
+        return MessageResult.ok(shortUrl.getUrls().get(0));
     }
 
 }

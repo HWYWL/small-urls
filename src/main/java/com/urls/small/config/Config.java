@@ -1,5 +1,7 @@
 package com.urls.small.config;
 
+import cn.hutool.core.util.ImageUtil;
+import cn.hutool.core.util.StrUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -24,6 +26,10 @@ public class Config {
     public static String source;
 
     public static String domain;
+
+    public static String getCreatePath(String fileName){
+        return "/QrCode" + StrUtil.SLASH + fileName + StrUtil.DOT + ImageUtil.IMAGE_TYPE_JPG;
+    }
 
     @Value("${key}")
     public void setKey(String key) {

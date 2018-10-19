@@ -2,17 +2,20 @@ package com.urls.small.url;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.ImageUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.qrcode.QrCodeUtil;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONUtil;
 import com.urls.small.config.Config;
 import com.urls.small.modle.SinaShortUrl;
+import com.urls.small.modle.Sm;
 import com.urls.small.modle.Url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.io.File;
 
 /**
  * 短链接获取和保存
@@ -28,24 +31,21 @@ public class UrlDaoImpl implements UrlDao{
 
     @Override
     public void saveUrl(Url url) {
-        QrCodeUtil.generate(Config.domain + url.getId(), 300, 300,
-                FileUtil.touch("./QrCode" + StrUtil.SLASH + url.getId() + StrUtil.DOT + ImageUtil.IMAGE_TYPE_JPG));
+        File file = FileUtil.touch(Config.getCreatePath(url.getId()));
+        QrCodeUtil.generate(Config.domain + url.getId(), 300, 300, file);
 
-        hashOperations.put(Config.key, url.getId(), url.getUrl());
+        Sm sm = getSm(file);
+
+        url.setQrCode(sm.getData().getUrl());
+
+        hashOperations.put(Config.key, url.getId(), JSONUtil.toJsonStr(url));
     }
 
     @Override
     public Url getUrl(String id) {
-        Url u = new Url();
+        String json = (String)hashOperations.get(Config.key, id);
 
-        String url ;
-        Object object = hashOperations.get(Config.key, id);
-
-        url = (String) object;
-        u.setId(id);
-        u.setUrl(url);
-
-        return u;
+        return JSONUtil.toBean(json, Url.class);
     }
 
     @Override
@@ -73,8 +73,33 @@ public class UrlDaoImpl implements UrlDao{
      */
     @Override
     public SinaShortUrl getSinaShortUrl(SinaShortUrl longUrl) {
-        hashOperations.put(Config.keySina, IdUtil.simpleUUID(), JSONUtil.toJsonStr(longUrl.getUrls()));
+        String simpleUUID = IdUtil.simpleUUID();
+        File file = FileUtil.touch(Config.getCreatePath(simpleUUID));
+        QrCodeUtil.generate(longUrl.getUrls().get(0).getUrl_short(), 300, 300, file);
+
+        Sm sm = getSm(file);
+
+        longUrl.getUrls().forEach(item -> item.setQrCode(sm.getData().getUrl()));
+
+        hashOperations.put(Config.keySina, simpleUUID, JSONUtil.toJsonStr(longUrl.getUrls()));
 
         return longUrl;
+    }
+
+    /**
+     * 把二维码上传到图床
+     * @param file 二维码文件
+     * @return
+     */
+    private Sm getSm(File file){
+        HttpRequest request = HttpRequest
+                .post("https://sm.ms/api/upload")
+                .form("smfile", file)
+                .form("ssl", false)
+                .form("format", "json");
+        HttpResponse response = request.execute();
+        String body = response.body();
+
+        return JSONUtil.toBean(body, Sm.class);
     }
 }
