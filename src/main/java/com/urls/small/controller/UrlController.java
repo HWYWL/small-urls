@@ -32,6 +32,15 @@ public class UrlController {
     }
 
     /**
+     * api文档
+     * @return
+     */
+    @GetMapping("/doc")
+    public String doc() {
+        return "doc";
+    }
+
+    /**
      * 根据id跳转到指定页面
      * @param id
      * @return
