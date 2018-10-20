@@ -32,7 +32,7 @@ public class UrlDaoImpl implements UrlDao{
     @Override
     public void saveUrl(Url url) {
         File file = FileUtil.touch(Config.getCreatePath(url.getId()));
-        QrCodeUtil.generate(Config.domain + url.getId(), 300, 300, file);
+        QrCodeUtil.generate(Config.domain + url.getId(), Config.LENGTH_WIDTH, Config.LENGTH_WIDTH, file);
 
         Sm sm = getSm(file);
 
@@ -75,7 +75,7 @@ public class UrlDaoImpl implements UrlDao{
     public SinaShortUrl getSinaShortUrl(SinaShortUrl longUrl) {
         String simpleUUID = IdUtil.simpleUUID();
         File file = FileUtil.touch(Config.getCreatePath(simpleUUID));
-        QrCodeUtil.generate(longUrl.getUrls().get(0).getUrl_short(), 300, 300, file);
+        QrCodeUtil.generate(longUrl.getUrls().get(0).getUrl_short(), Config.LENGTH_WIDTH, Config.LENGTH_WIDTH, file);
 
         Sm sm = getSm(file);
 

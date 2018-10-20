@@ -27,6 +27,11 @@ public class Config {
 
     public static String domain;
 
+    /**
+     * 生成二维码的长宽
+     */
+    public static int LENGTH_WIDTH = 200;
+
     public static String getCreatePath(String fileName){
         return "/QrCode" + StrUtil.SLASH + fileName + StrUtil.DOT + ImageUtil.IMAGE_TYPE_JPG;
     }

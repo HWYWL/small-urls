@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
  * @date 2018-10-18 17:52:37
  */
 @Service
-@PropertySource("classpath:application.properties")
 public class RedisIdGenerator implements IdGenerator {
 
 
