@@ -25,7 +25,7 @@ public class SinaShortUrlImpl implements SinaShortUrlService {
 
     @Override
     public SinaShortUrl getShortUrl(String longUrl) {
-        if(!longUrl.startsWith("http://") && !longUrl.startsWith("https://")){
+        if(!longUrl.startsWith(Config.URL_HTTP) && !longUrl.startsWith(Config.URL_HTTPS)){
             longUrl = URLUtil.normalize(longUrl);
         }
 

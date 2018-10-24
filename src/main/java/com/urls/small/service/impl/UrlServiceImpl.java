@@ -3,6 +3,7 @@ package com.urls.small.service.impl;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.crypto.digest.DigestUtil;
+import com.urls.small.config.Config;
 import com.urls.small.modle.Url;
 import com.urls.small.service.UrlService;
 import com.urls.small.url.UrlDao;
@@ -30,7 +31,7 @@ public class UrlServiceImpl implements UrlService {
     @Override
     public Url saveUrl(Url url) {
         String lUrl = url.getUrl();
-        if(!lUrl.startsWith("http://") &&! lUrl.startsWith("https://")){
+        if(!lUrl.startsWith(Config.URL_HTTP) &&! lUrl.startsWith(Config.URL_HTTPS)){
             url.setUrl(URLUtil.normalize(lUrl));
         }
 

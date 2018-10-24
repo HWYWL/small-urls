@@ -32,6 +32,9 @@ public class Config {
      */
     public static int LENGTH_WIDTH = 200;
 
+    public static String URL_HTTP = "http://";
+    public static String URL_HTTPS = "https://";
+
     public static String getCreatePath(String fileName){
         return "/QrCode" + StrUtil.SLASH + fileName + StrUtil.DOT + ImageUtil.IMAGE_TYPE_JPG;
     }
